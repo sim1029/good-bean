@@ -36,7 +36,7 @@ struct ContentView: View {
                 .cornerRadius(8)
 
                 HStack {
-                    Image(systemName: "chart.line")
+                    Image(systemName: "chart.bar")
                         .font(.system(size: 20))
                     Text("Visualize")
                         .font(.system(size: 14, weight: .medium, design: .default))
