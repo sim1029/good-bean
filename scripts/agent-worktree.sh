@@ -26,10 +26,11 @@ echo "Creating worktree at $WORKTREE_DIR on branch $BRANCH..."
 git -C "$REPO_ROOT" worktree add -b "$BRANCH" "$WORKTREE_DIR" origin/main
 
 # Launch Claude Code
+cd "$WORKTREE_DIR"
 if [ -n "$PROMPT" ]; then
   echo "Launching headless agent with prompt..."
-  claude --dangerously-skip-permissions -p "$PROMPT" --cwd "$WORKTREE_DIR"
+  claude --dangerously-skip-permissions -p "$PROMPT"
 else
   echo "Launching interactive agent..."
-  claude --dangerously-skip-permissions --cwd "$WORKTREE_DIR"
+  claude --dangerously-skip-permissions
 fi
