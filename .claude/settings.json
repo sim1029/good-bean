@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh *)",
+      "Bash(xcodebuild *)",
+      "Bash(xcrun *)",
+      "Bash(swift *)",
+      "Bash(swiftlint *)",
+      "Bash(swiftformat *)",
+      "Bash(supabase *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(chmod *)",
+      "Bash(which *)",
+      "Bash(pwd)",
+      "mcp__supabase__*",
+      "mcp__XcodeBuildMCP__*"
+    ],
+    "deny": [
+      "Bash(git push * --force*)",
+      "Bash(git push --force*)",
+      "Bash(rm -rf /)"
+    ]
+  },
+  "enableAllProjectMcpServers": true
+}
