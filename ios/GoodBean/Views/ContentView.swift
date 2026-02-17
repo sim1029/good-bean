@@ -1,38 +1,70 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab = 0
-
     var body: some View {
-        TabView(selection: $selectedTab) {
-            CafePage()
-                .tabItem {
-                    Image(systemName: "cup.and.saucer")
-                    Text("Cafe")
-                }
-                .tag(0)
+        VStack(spacing: 20) {
+            Text("GoodBean")
+                .font(.system(size: 32, weight: .bold, design: .default))
 
-            FeedPage()
-                .tabItem {
-                    Image(systemName: "person.2.fill")
-                    Text("Feed")
-                }
-                .tag(1)
+            Text("Espresso Tracking")
+                .font(.system(size: 16, weight: .regular, design: .default))
+                .foregroundStyle(.secondary)
 
-            VisualizePage()
-                .tabItem {
-                    Image(systemName: "chart.bar.fill")
+            Spacer()
+
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    Image(systemName: "dial.medium")
+                        .font(.system(size: 20))
+                    Text("Dial In")
+                        .font(.system(size: 14, weight: .medium, design: .default))
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(12)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+
+                HStack {
+                    Image(systemName: "rectangle.stack")
+                        .font(.system(size: 20))
+                    Text("Inventory")
+                        .font(.system(size: 14, weight: .medium, design: .default))
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(12)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+
+                HStack {
+                    Image(systemName: "chart.bar")
+                        .font(.system(size: 20))
                     Text("Visualize")
+                        .font(.system(size: 14, weight: .medium, design: .default))
                 }
-                .tag(2)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(12)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
 
-            ProfilePage()
-                .tabItem {
-                    Image(systemName: "person.circle.fill")
-                    Text("Profile")
+                HStack {
+                    Image(systemName: "person.2")
+                        .font(.system(size: 20))
+                    Text("Social")
+                        .font(.system(size: 14, weight: .medium, design: .default))
                 }
-                .tag(3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(12)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+            }
+
+            Spacer()
+
+            Text("v0.1.0")
+                .font(.system(size: 12, weight: .regular, design: .default))
+                .foregroundStyle(.secondary)
         }
+        .padding(24)
     }
 }
 
