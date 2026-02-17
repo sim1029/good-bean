@@ -4,3 +4,29 @@
 # Environment secrets
 .env
 .env.*
+
+# --- Xcode System Files ---
+# User-specific settings (window positions, last opened files)
+*.xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Build artifacts (Generated files, extremely large)
+DerivedData/
+build/
+
+# macOS Junk
+.DS_Store
+
+# --- Swift Package Manager ---
+.swiftpm/xcode/
+.build/
+
+# --- Dependency Managers (If you use them) ---
+# CocoaPods
+Pods/
+# Carthage
+Carthage/Build/
+
+# --- Fastlane (If you use it) ---
+fastlane/report.xml
+fastlane/screenshots
