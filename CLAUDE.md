@@ -16,6 +16,19 @@ Users can:
 
 ---
 
+## App Navigation Structure
+
+The app uses a bottom tab bar with icon-only navigation (no text labels). Four main sections:
+
+- **Cafe** (`CafePage`) — The user's home page. This is where they log new espresso pulls and view/edit their equipment setup (grinder, machine, accessories). Default landing tab.
+- **Feed** (`FeedPage`) — The social page. Users can see other users' activities, shared shot profiles, and public bean reviews from the community.
+- **Visualize** (`VisualizePage`) — The data dashboard. Displays the user's espresso data in an engaging way — extraction trends, "Golden Ratio" charts, and personalized statistics.
+- **Profile** (`ProfilePage`) — Account management. Users can manage their settings, update preferences, view their profile info, and log out.
+
+Tab icons (SF Symbols): `cup.and.saucer.fill`, `person.2.fill`, `chart.bar.fill`, `person.crop.circle.fill`
+
+---
+
 ## Tech Stack
 
 - **Frontend:** SwiftUI (iOS 17+ target)

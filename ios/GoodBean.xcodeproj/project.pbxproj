@@ -19,6 +19,10 @@
 		BD00000060 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000061 /* LoginView.swift */; };
 		BD00000062 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000063 /* AuthenticationManager.swift */; };
 		BD00000064 /* DevSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000065 /* DevSettings.swift */; };
+		BD00000022 /* CafePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000023 /* CafePage.swift */; };
+		BD00000024 /* FeedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000025 /* FeedPage.swift */; };
+		BD00000026 /* VisualizePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000027 /* VisualizePage.swift */; };
+		BD00000028 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000029 /* ProfilePage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +39,10 @@
 		BD00000061 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		BD00000063 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		BD00000065 /* DevSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevSettings.swift; sourceTree = "<group>"; };
+		BD00000023 /* CafePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafePage.swift; sourceTree = "<group>"; };
+		BD00000025 /* FeedPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPage.swift; sourceTree = "<group>"; };
+		BD00000027 /* VisualizePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizePage.swift; sourceTree = "<group>"; };
+		BD00000029 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +77,10 @@
 				BD00000004 /* ContentView.swift */,
 				BD00000050 /* BeansListView.swift */,
 				BD00000061 /* LoginView.swift */,
+				BD00000023 /* CafePage.swift */,
+				BD00000025 /* FeedPage.swift */,
+				BD00000027 /* VisualizePage.swift */,
+				BD00000029 /* ProfilePage.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,6 +220,10 @@
 				BD00000060 /* LoginView.swift in Sources */,
 				BD00000062 /* AuthenticationManager.swift in Sources */,
 				BD00000064 /* DevSettings.swift in Sources */,
+				BD00000022 /* CafePage.swift in Sources */,
+				BD00000024 /* FeedPage.swift in Sources */,
+				BD00000026 /* VisualizePage.swift in Sources */,
+				BD00000028 /* ProfilePage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

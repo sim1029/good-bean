@@ -8,16 +8,7 @@ struct GoodBeanApp: App {
         WindowGroup {
             Group {
                 if authManager.isAuthenticated {
-                    TabView {
-                        ContentView()
-                            .tabItem {
-                                Label("Home", systemImage: "house")
-                            }
-                        BeansListView()
-                            .tabItem {
-                                Label("Beans", systemImage: "bag")
-                            }
-                    }
+                    ContentView()
                 } else {
                     LoginView(authManager: authManager)
                 }
