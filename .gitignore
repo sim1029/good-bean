@@ -30,3 +30,6 @@ Carthage/Build/
 # --- Fastlane (If you use it) ---
 fastlane/report.xml
 fastlane/screenshots
+
+# --- Supabase CLI ---
+supabase/.temp/

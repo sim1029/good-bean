@@ -13,6 +13,9 @@
 		BD00000007 /* SupabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000008 /* SupabaseClient.swift */; };
 		BD00000009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD0000000A /* Assets.xcassets */; };
 		BD0000000B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD0000000C /* Preview Assets.xcassets */; };
+		BD00000032 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = BD00000031 /* Supabase */; };
+		BD00000041 /* Bean.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000040 /* Bean.swift */; };
+		BD00000051 /* BeansListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000050 /* BeansListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,8 @@
 		BD0000000A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD0000000C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BD0000000E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BD00000040 /* Bean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bean.swift; sourceTree = "<group>"; };
+		BD00000050 /* BeansListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeansListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD00000032 /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				BD00000004 /* ContentView.swift */,
+				BD00000050 /* BeansListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -63,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				BD00000006 /* Profile.swift */,
+				BD00000040 /* Bean.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -123,6 +131,9 @@
 			dependencies = (
 			);
 			name = GoodBean;
+			packageProductDependencies = (
+				BD00000031 /* Supabase */,
+			);
 			productName = GoodBean;
 			productReference = BD0000000D /* GoodBean.app */;
 			productType = "com.apple.product-type.application";
@@ -150,6 +161,9 @@
 				en,
 			);
 			mainGroup = BD00000017 /* Root */;
+			packageReferences = (
+				BD00000030 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			productRefGroup = BD00000015 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -180,6 +194,8 @@
 				BD00000003 /* ContentView.swift in Sources */,
 				BD00000005 /* Profile.swift in Sources */,
 				BD00000007 /* SupabaseClient.swift in Sources */,
+				BD00000041 /* Bean.swift in Sources */,
+				BD00000051 /* BeansListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +396,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BD00000030 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BD00000031 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BD00000030 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BD0000001C /* Project object */;
 }
