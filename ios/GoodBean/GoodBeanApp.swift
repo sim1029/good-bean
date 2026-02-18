@@ -4,7 +4,16 @@ import SwiftUI
 struct GoodBeanApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabView {
+                ContentView()
+                    .tabItem {
+                        Label("Home", systemImage: "house")
+                    }
+                BeansListView()
+                    .tabItem {
+                        Label("Beans", systemImage: "bag")
+                    }
+            }
         }
     }
 }
