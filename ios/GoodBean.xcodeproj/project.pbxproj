@@ -16,6 +16,9 @@
 		BD00000032 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = BD00000031 /* Supabase */; };
 		BD00000041 /* Bean.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000040 /* Bean.swift */; };
 		BD00000051 /* BeansListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000050 /* BeansListView.swift */; };
+		BD00000060 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000061 /* LoginView.swift */; };
+		BD00000062 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000063 /* AuthenticationManager.swift */; };
+		BD00000064 /* DevSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000065 /* DevSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,9 @@
 		BD0000000E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD00000040 /* Bean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bean.swift; sourceTree = "<group>"; };
 		BD00000050 /* BeansListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeansListView.swift; sourceTree = "<group>"; };
+		BD00000061 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		BD00000063 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		BD00000065 /* DevSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +68,7 @@
 			children = (
 				BD00000004 /* ContentView.swift */,
 				BD00000050 /* BeansListView.swift */,
+				BD00000061 /* LoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -79,6 +86,8 @@
 			isa = PBXGroup;
 			children = (
 				BD00000008 /* SupabaseClient.swift */,
+				BD00000063 /* AuthenticationManager.swift */,
+				BD00000065 /* DevSettings.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -196,6 +205,9 @@
 				BD00000007 /* SupabaseClient.swift in Sources */,
 				BD00000041 /* Bean.swift in Sources */,
 				BD00000051 /* BeansListView.swift in Sources */,
+				BD00000060 /* LoginView.swift in Sources */,
+				BD00000062 /* AuthenticationManager.swift in Sources */,
+				BD00000064 /* DevSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
