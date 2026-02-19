@@ -33,6 +33,7 @@ struct ContentView: View {
                 }
                 .tag(AppTab.profile)
         }
+        .tint(.gbAccent)
     }
 }
 
