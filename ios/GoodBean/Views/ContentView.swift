@@ -6,6 +6,7 @@ enum AppTab: Int {
 
 struct ContentView: View {
     @State private var selectedTab: AppTab = .cafe
+    let authManager: AuthenticationManager
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -27,7 +28,7 @@ struct ContentView: View {
                 }
                 .tag(AppTab.visualize)
 
-            ProfilePage()
+            ProfilePage(authManager: authManager)
                 .tabItem {
                     Image(systemName: "person.crop.circle.fill")
                 }
@@ -38,5 +39,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(authManager: AuthenticationManager())
 }

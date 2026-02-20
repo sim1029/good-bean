@@ -2,6 +2,8 @@ import SwiftUI
 
 // MARK: - ProfilePage
 struct ProfilePage: View {
+    let authManager: AuthenticationManager
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -165,8 +167,10 @@ struct ProfilePage: View {
 
     // MARK: - Sign Out
     private var signOutButton: some View {
-        Button("Sign Out") {}
-            .font(Theme.Font.body.weight(.medium))
+        Button("Sign Out") {
+            Task { await authManager.signOut() }
+        }
+        .font(Theme.Font.body.weight(.medium))
             .foregroundStyle(Color.red)
             .frame(maxWidth: .infinity)
             .padding(.vertical, Theme.Spacing.md)
@@ -180,5 +184,5 @@ struct ProfilePage: View {
 }
 
 #Preview {
-    ProfilePage()
+    ProfilePage(authManager: AuthenticationManager())
 }
