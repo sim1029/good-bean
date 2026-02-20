@@ -42,5 +42,16 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.goodbean.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>goodbean</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

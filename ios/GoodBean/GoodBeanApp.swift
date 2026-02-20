@@ -8,13 +8,18 @@ struct GoodBeanApp: App {
         WindowGroup {
             Group {
                 if authManager.isAuthenticated {
-                    ContentView()
+                    ContentView(authManager: authManager)
                 } else {
                     LoginView(authManager: authManager)
                 }
             }
-            .task {
-                await authManager.restoreSession()
+            .onAppear {
+                authManager.startListening()
+            }
+            .onOpenURL { url in
+                Task {
+                    try? await SupabaseService.shared.client.auth.session(from: url)
+                }
             }
         }
     }

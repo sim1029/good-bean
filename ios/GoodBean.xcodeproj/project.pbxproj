@@ -24,6 +24,7 @@
 		BD00000026 /* VisualizePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000027 /* VisualizePage.swift */; };
 		BD00000028 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000029 /* ProfilePage.swift */; };
 		BD00000070 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000071 /* AppTheme.swift */; };
+		BD00000080 /* EmailAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000081 /* EmailAuthView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		BD00000027 /* VisualizePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizePage.swift; sourceTree = "<group>"; };
 		BD00000029 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		BD00000071 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		BD00000081 /* EmailAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				BD00000025 /* FeedPage.swift */,
 				BD00000027 /* VisualizePage.swift */,
 				BD00000029 /* ProfilePage.swift */,
+				BD00000081 /* EmailAuthView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				BD00000026 /* VisualizePage.swift in Sources */,
 				BD00000028 /* ProfilePage.swift in Sources */,
 				BD00000070 /* AppTheme.swift in Sources */,
+				BD00000080 /* EmailAuthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

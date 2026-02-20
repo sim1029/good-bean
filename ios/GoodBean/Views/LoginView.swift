@@ -2,8 +2,7 @@ import SwiftUI
 
 struct LoginView: View {
     @Bindable var authManager: AuthenticationManager
-    @State private var showPhoneInput = false
-    @State private var phoneNumber = ""
+    @State private var showEmailAuth = false
 
     var body: some View {
         ZStack {
@@ -33,33 +32,10 @@ struct LoginView: View {
                     )
 
                     authButton(
-                        label: "Continue with Facebook",
-                        icon: "person.crop.square",
-                        action: { Task { await authManager.signInWithFacebook() } }
+                        label: "Continue with Email",
+                        icon: "envelope",
+                        action: { showEmailAuth = true }
                     )
-
-                    authButton(
-                        label: "Continue with Phone",
-                        icon: "phone",
-                        action: { withAnimation { showPhoneInput.toggle() } }
-                    )
-
-                    if showPhoneInput {
-                        HStack(spacing: Theme.Spacing.sm) {
-                            TextField("Phone number", text: $phoneNumber)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.phonePad)
-
-                            Button("Send") {
-                                Task { await authManager.signInWithPhone(phoneNumber) }
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .tint(.gbAccent)
-                            .disabled(phoneNumber.isEmpty)
-                        }
-                        .padding(.horizontal, Theme.Spacing.xs)
-                        .transition(.opacity.combined(with: .move(edge: .top)))
-                    }
 
                     #if DEBUG && targetEnvironment(simulator)
                     Divider()
@@ -95,6 +71,9 @@ struct LoginView: View {
                     .controlSize(.large)
                     .tint(.gbAccent)
             }
+        }
+        .sheet(isPresented: $showEmailAuth) {
+            EmailAuthView(authManager: authManager)
         }
     }
 
