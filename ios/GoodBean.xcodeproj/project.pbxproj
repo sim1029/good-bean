@@ -25,6 +25,9 @@
 		BD00000028 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000029 /* ProfilePage.swift */; };
 		BD00000070 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000071 /* AppTheme.swift */; };
 		BD00000080 /* EmailAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000081 /* EmailAuthView.swift */; };
+		BD00000090 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000091 /* Machine.swift */; };
+		BD00000092 /* ShotPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000093 /* ShotPull.swift */; };
+		BD00000094 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000095 /* FeedItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +50,9 @@
 		BD00000029 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		BD00000071 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		BD00000081 /* EmailAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthView.swift; sourceTree = "<group>"; };
+		BD00000091 /* Machine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
+		BD00000093 /* ShotPull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotPull.swift; sourceTree = "<group>"; };
+		BD00000095 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,9 @@
 			children = (
 				BD00000006 /* Profile.swift */,
 				BD00000040 /* Bean.swift */,
+				BD00000091 /* Machine.swift */,
+				BD00000093 /* ShotPull.swift */,
+				BD00000095 /* FeedItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -232,6 +241,9 @@
 				BD00000028 /* ProfilePage.swift in Sources */,
 				BD00000070 /* AppTheme.swift in Sources */,
 				BD00000080 /* EmailAuthView.swift in Sources */,
+				BD00000090 /* Machine.swift in Sources */,
+				BD00000092 /* ShotPull.swift in Sources */,
+				BD00000094 /* FeedItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

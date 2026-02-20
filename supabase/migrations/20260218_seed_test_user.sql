@@ -3,32 +3,26 @@
 -- Email: testuser@goodbean.dev
 -- Password: testpassword123
 
--- Insert test user into auth.users
-INSERT INTO auth.users (
-  id,
-  instance_id,
-  aud,
-  role,
-  email,
-  encrypted_password,
-  email_confirmed_at,
-  created_at,
-  updated_at,
-  confirmation_token,
-  recovery_token
-) VALUES (
-  'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-  '00000000-0000-0000-0000-000000000000',
-  'authenticated',
-  'authenticated',
-  'testuser@goodbean.dev',
-  crypt('testpassword123', gen_salt('bf')),
-  NOW(),
-  NOW(),
-  NOW(),
-  '',
-  ''
-) ON CONFLICT (id) DO NOTHING;
+-- Insert test user into auth.users only if they don't already exist.
+-- Guard avoids calling gen_salt (pgcrypto) when the user was already
+-- created via the Supabase dashboard on the hosted project.
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM auth.users WHERE id = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+  ) THEN
+    INSERT INTO auth.users (
+      id, instance_id, aud, role, email, encrypted_password,
+      email_confirmed_at, created_at, updated_at, confirmation_token, recovery_token
+    ) VALUES (
+      'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+      '00000000-0000-0000-0000-000000000000',
+      'authenticated', 'authenticated', 'testuser@goodbean.dev',
+      crypt('testpassword123', gen_salt('bf')),
+      NOW(), NOW(), NOW(), '', ''
+    );
+  END IF;
+END $$;
 
 -- Insert matching identity row (required for Supabase email auth to work)
 INSERT INTO auth.identities (

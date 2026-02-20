@@ -8,11 +8,12 @@ struct GoodBeanApp: App {
         WindowGroup {
             Group {
                 if authManager.isAuthenticated {
-                    ContentView(authManager: authManager)
+                    ContentView()
                 } else {
                     LoginView(authManager: authManager)
                 }
             }
+            .environment(authManager)
             .onAppear {
                 authManager.startListening()
             }
