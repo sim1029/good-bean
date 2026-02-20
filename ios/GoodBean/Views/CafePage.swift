@@ -1,53 +1,194 @@
 import SwiftUI
 
-// MARK: - Mock Data
-private struct MockShot: Identifiable {
-    let id = UUID()
-    let beanName: String
-    let roaster: String
-    let dose: Double
-    let yield: Double
-    let time: Int
-    let rating: Int
+// MARK: - CafePage
+struct CafePage: View {
+    @Environment(AuthenticationManager.self) private var authManager
+
+    @State private var profile: Profile?
+    @State private var activeBean: Bean?
+    @State private var activeMachine: Machine?
+    @State private var shots: [ShotPull] = []
+    @State private var shotBeans: [UUID: BeanEmbed] = [:]
+    @State private var isLoading = false
+    @State private var errorMessage: String?
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if isLoading && shots.isEmpty {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    ScrollView {
+                        VStack(spacing: Theme.Spacing.lg) {
+                            heroCTACard
+                            if let bean = activeBean {
+                                activeBeanCard(bean)
+                            }
+                            if !shots.isEmpty {
+                                recentShotsSection
+                            }
+                        }
+                        .padding(Theme.Spacing.md)
+                    }
+                    .refreshable { await load() }
+                }
+            }
+            .background(Color.gbBackground)
+            .navigationTitle("Cafe")
+            .navigationBarTitleDisplayMode(.large)
+        }
+        .task { await load() }
+    }
+
+    private func load() async {
+        guard let userId = authManager.currentUserId else { return }
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            async let profileTask = SupabaseService.shared.getProfile(id: userId)
+            async let shotsTask = SupabaseService.shared.getShotPulls(for: userId)
+            let (loadedProfile, loadedShots) = try await (profileTask, shotsTask)
+            profile = loadedProfile
+            shots = loadedShots
+
+            if let beanId = loadedProfile.activeBeanId {
+                activeBean = try? await SupabaseService.shared.getBean(id: beanId)
+            }
+            if let machineId = loadedProfile.activeMachineId {
+                activeMachine = try? await SupabaseService.shared.getMachine(id: machineId)
+            }
+
+            let uniqueBeanIds = Set(loadedShots.compactMap(\.beanId))
+            var beans: [UUID: BeanEmbed] = [:]
+            for beanId in uniqueBeanIds {
+                if let bean = try? await SupabaseService.shared.getBean(id: beanId) {
+                    beans[beanId] = BeanEmbed(name: bean.name, roaster: bean.roaster)
+                }
+            }
+            shotBeans = beans
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    // MARK: - Hero CTA Card
+
+    private var heroCTACard: some View {
+        VStack(alignment: .leading, spacing: Theme.Spacing.md) {
+            VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
+                Text("Ready to pull?")
+                    .font(Theme.Font.title)
+                    .foregroundStyle(Color.gbTextPrimary)
+                if let machine = activeMachine {
+                    Text("on \(machine.displayName)")
+                        .font(Theme.Font.body)
+                        .foregroundStyle(Color.gbTextSecondary)
+                } else {
+                    Text("Log your next shot")
+                        .font(Theme.Font.body)
+                        .foregroundStyle(Color.gbTextSecondary)
+                }
+            }
+            Button("+ Pull") {}
+                .buttonStyle(GBPrimaryButtonStyle())
+        }
+        .padding(Theme.Spacing.lg)
+        .gbCardStyle()
+    }
+
+    // MARK: - Active Bean Card
+
+    private func activeBeanCard(_ bean: Bean) -> some View {
+        VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
+            Text("ACTIVE BEAN")
+                .font(Theme.Font.caption)
+                .foregroundStyle(Color.gbTextTertiary)
+                .kerning(1)
+
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
+                    Text(bean.name)
+                        .font(Theme.Font.headline)
+                        .foregroundStyle(Color.gbTextPrimary)
+                    Text("\(bean.roaster)")
+                        .font(Theme.Font.body)
+                        .foregroundStyle(Color.gbTextSecondary)
+                    if let roastDate = bean.roastDate {
+                        Text(daysAgoText(from: roastDate))
+                            .font(Theme.Font.caption)
+                            .foregroundStyle(Color.gbTextTertiary)
+                    }
+                }
+                Spacer()
+                if let level = bean.roastLevel {
+                    Text(level.uppercased())
+                        .font(Theme.Font.caption.weight(.medium))
+                        .foregroundStyle(Color.gbAccent)
+                        .padding(.horizontal, Theme.Spacing.sm)
+                        .padding(.vertical, Theme.Spacing.xs)
+                        .background(Color.gbAccent.opacity(0.12))
+                        .clipShape(Capsule())
+                }
+            }
+        }
+        .padding(Theme.Spacing.lg)
+        .gbCardStyle()
+    }
+
+    private func daysAgoText(from dateString: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let date = formatter.date(from: dateString) else { return "" }
+        let days = Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0
+        return "Roasted \(days) day\(days == 1 ? "" : "s") ago"
+    }
+
+    // MARK: - Recent Shots Section
+
+    private var recentShotsSection: some View {
+        VStack(spacing: Theme.Spacing.sm) {
+            HStack {
+                Text("RECENT SHOTS")
+                    .font(Theme.Font.caption)
+                    .foregroundStyle(Color.gbTextTertiary)
+                    .kerning(1)
+                Spacer()
+            }
+
+            ForEach(shots) { shot in
+                ShotRowView(shot: shot, beanEmbed: shot.beanId.flatMap { shotBeans[$0] })
+            }
+        }
+    }
 }
 
-private let mockShots: [MockShot] = [
-    MockShot(beanName: "Geisha Reserve", roaster: "Onyx Coffee Lab", dose: 18.0, yield: 36.0, time: 28, rating: 8),
-    MockShot(beanName: "Geisha Reserve", roaster: "Onyx Coffee Lab", dose: 18.2, yield: 37.0, time: 30, rating: 9),
-    MockShot(beanName: "Nightcap Blend", roaster: "Counter Culture",  dose: 19.0, yield: 38.0, time: 32, rating: 7),
-]
+// MARK: - Shot Row View
 
-// MARK: - Subviews
 private struct ShotRowView: View {
-    let shot: MockShot
+    let shot: ShotPull
+    let beanEmbed: BeanEmbed?
 
     var body: some View {
         HStack(spacing: Theme.Spacing.md) {
-            // Bean info
             VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
-                Text(shot.beanName)
+                Text(beanEmbed?.name ?? "Unknown Bean")
                     .font(Theme.Font.headline)
                     .foregroundStyle(Color.gbTextPrimary)
-                Text(shot.roaster)
+                Text(beanEmbed?.roaster ?? "")
                     .font(Theme.Font.caption)
                     .foregroundStyle(Color.gbTextSecondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            // Data cells
             HStack(spacing: Theme.Spacing.md) {
-                dataCell(value: String(format: "%.1fg", shot.dose), label: "DOSE")
-                dataCell(value: String(format: "%.1fg", shot.yield), label: "YIELD")
-                dataCell(value: "\(shot.time)s", label: "TIME")
+                dataCell(value: String(format: "%.1fg", shot.doseGrams), label: "DOSE")
+                dataCell(value: String(format: "%.1fg", shot.yieldGrams), label: "YIELD")
+                dataCell(value: "\(shot.timeSeconds)s", label: "TIME")
             }
 
-            // Rating bar (10 pips)
-            HStack(spacing: 2) {
-                ForEach(1...10, id: \.self) { pip in
-                    RoundedRectangle(cornerRadius: 1.5)
-                        .fill(pip <= shot.rating ? Color.gbAccent : Color.gbSeparator)
-                        .frame(width: 3, height: 14)
-                }
+            if let rating = shot.rating {
+                RatingPips(rating: rating)
             }
         }
         .padding(Theme.Spacing.md)
@@ -66,87 +207,7 @@ private struct ShotRowView: View {
     }
 }
 
-// MARK: - CafePage
-struct CafePage: View {
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: Theme.Spacing.lg) {
-                    // Hero CTA card
-                    VStack(alignment: .leading, spacing: Theme.Spacing.md) {
-                        VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
-                            Text("Ready to pull?")
-                                .font(Theme.Font.title)
-                                .foregroundStyle(Color.gbTextPrimary)
-                            Text("Log your next shot")
-                                .font(Theme.Font.body)
-                                .foregroundStyle(Color.gbTextSecondary)
-                        }
-                        Button("+ Pull") {}
-                            .buttonStyle(GBPrimaryButtonStyle())
-                    }
-                    .padding(Theme.Spacing.lg)
-                    .gbCardStyle()
-
-                    // Active bean card
-                    VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
-                        Text("ACTIVE BEAN")
-                            .font(Theme.Font.caption)
-                            .foregroundStyle(Color.gbTextTertiary)
-                            .kerning(1)
-
-                        HStack(alignment: .top) {
-                            VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
-                                Text("Geisha Reserve")
-                                    .font(Theme.Font.headline)
-                                    .foregroundStyle(Color.gbTextPrimary)
-                                Text("Onyx Coffee Lab · Light")
-                                    .font(Theme.Font.body)
-                                    .foregroundStyle(Color.gbTextSecondary)
-                                Text("Roasted 9 days ago")
-                                    .font(Theme.Font.caption)
-                                    .foregroundStyle(Color.gbTextTertiary)
-                            }
-                            Spacer()
-                            Text("LIGHT")
-                                .font(Theme.Font.caption.weight(.medium))
-                                .foregroundStyle(Color.gbAccent)
-                                .padding(.horizontal, Theme.Spacing.sm)
-                                .padding(.vertical, Theme.Spacing.xs)
-                                .background(Color.gbAccent.opacity(0.12))
-                                .clipShape(Capsule())
-                        }
-                    }
-                    .padding(Theme.Spacing.lg)
-                    .gbCardStyle()
-
-                    // Recent shots
-                    VStack(spacing: Theme.Spacing.sm) {
-                        HStack {
-                            Text("RECENT SHOTS")
-                                .font(Theme.Font.caption)
-                                .foregroundStyle(Color.gbTextTertiary)
-                                .kerning(1)
-                            Spacer()
-                            Button("See All") {}
-                                .font(Theme.Font.caption.weight(.medium))
-                                .foregroundStyle(Color.gbAccent)
-                        }
-
-                        ForEach(mockShots) { shot in
-                            ShotRowView(shot: shot)
-                        }
-                    }
-                }
-                .padding(Theme.Spacing.md)
-            }
-            .background(Color.gbBackground)
-            .navigationTitle("Cafe")
-            .navigationBarTitleDisplayMode(.large)
-        }
-    }
-}
-
 #Preview {
     CafePage()
+        .environment(AuthenticationManager())
 }

@@ -65,4 +65,48 @@ final class SupabaseService: Sendable {
     func getProfile(id: UUID) async throws -> Profile {
         try await fetchById(from: "profiles", id: id)
     }
+
+    // MARK: - Machines
+
+    func getMachine(id: UUID) async throws -> Machine {
+        try await fetchById(from: "machines", id: id)
+    }
+
+    // MARK: - Shot Pulls
+
+    func getShotPulls(for userId: UUID) async throws -> [ShotPull] {
+        try await client.from("shot_pulls").select()
+            .eq("user_id", value: userId)
+            .order("created_at", ascending: false)
+            .execute().value
+    }
+
+    // MARK: - Feed
+
+    func getFeedShots() async throws -> [FeedShotPull] {
+        try await client.from("shot_pulls")
+            .select("*,shot_likes(user_id),shot_comments(id),beans(name,roaster),profiles(username,avatar_url)")
+            .eq("is_public", value: true)
+            .order("created_at", ascending: false)
+            .limit(50)
+            .execute().value
+    }
+
+    func getFeedBeans() async throws -> [FeedBean] {
+        try await client.from("beans")
+            .select("*,bean_likes(user_id),bean_comments(id),profiles!created_by(username,avatar_url)")
+            .eq("is_public", value: true)
+            .order("created_at", ascending: false)
+            .limit(50)
+            .execute().value
+    }
+
+    func getFeedMachines() async throws -> [FeedMachine] {
+        try await client.from("machines")
+            .select("*,machine_likes(user_id),machine_comments(id),profiles!created_by(username,avatar_url)")
+            .eq("is_public", value: true)
+            .order("created_at", ascending: false)
+            .limit(50)
+            .execute().value
+    }
 }
