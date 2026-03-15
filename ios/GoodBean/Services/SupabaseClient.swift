@@ -56,6 +56,15 @@ final class SupabaseService: Sendable {
         try await fetchById(from: "beans", id: id)
     }
 
+    func updateBeanStatus(id: UUID, status: BeanStatus, remainingGrams: Double?) async throws {
+        struct BeanStatusUpdate: Encodable {
+            let status: String
+            let remaining_grams: Double?
+        }
+        let update = BeanStatusUpdate(status: status.rawValue, remaining_grams: remainingGrams)
+        try await client.from("beans").update(update).eq("id", value: id).execute()
+    }
+
     // MARK: - Profiles
 
     func getProfiles() async throws -> [Profile] {

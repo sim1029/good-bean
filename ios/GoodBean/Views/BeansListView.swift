@@ -35,23 +35,8 @@ struct BeansListView: View {
                     )
                 } else {
                     List(beans) { bean in
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(bean.name)
-                                .font(.headline)
-                            HStack(spacing: 16) {
-                                Label(bean.roaster, systemImage: "flame")
-                                if let roastLevel = bean.roastLevel {
-                                    Label(roastLevel.capitalized, systemImage: "dial.medium")
-                                }
-                            }
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            if let notes = bean.notes {
-                                Text(notes)
-                                    .font(.caption)
-                                    .foregroundStyle(.tertiary)
-                                    .lineLimit(2)
-                            }
+                        BeanRowView(bean: bean) { newStatus in
+                            await updateStatus(for: bean, status: newStatus)
                         }
                         .padding(.vertical, 4)
                     }
@@ -78,6 +63,111 @@ struct BeansListView: View {
             errorMessage = error.localizedDescription
         }
         isLoading = false
+    }
+
+    private func updateStatus(for bean: Bean, status: BeanStatus) async {
+        do {
+            try await SupabaseService.shared.updateBeanStatus(
+                id: bean.id,
+                status: status,
+                remainingGrams: bean.remainingGrams
+            )
+            if let idx = beans.firstIndex(where: { $0.id == bean.id }) {
+                // Refresh just that row
+                let updated = try await SupabaseService.shared.getBean(id: bean.id)
+                beans[idx] = updated
+            }
+        } catch {
+            // Silently fail — not ideal but keeps the list responsive
+        }
+    }
+}
+
+// MARK: - Bean Row View
+
+private struct BeanRowView: View {
+    let bean: Bean
+    let onStatusChange: (BeanStatus) async -> Void
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(bean.name)
+                    .font(.headline)
+
+                HStack(spacing: 14) {
+                    Label(bean.roaster, systemImage: "flame")
+                    if let roastLevel = bean.roastLevel {
+                        Label(roastLevel.capitalized, systemImage: "dial.medium")
+                    }
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+                if let remaining = bean.remainingGrams {
+                    Text(String(format: "%.0fg remaining", remaining))
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
+
+                if let notes = bean.notes {
+                    Text(notes)
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                        .lineLimit(2)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            BeanStatusBadge(status: bean.status)
+                .contextMenu {
+                    ForEach(BeanStatus.allCases, id: \.self) { status in
+                        Button {
+                            Task { await onStatusChange(status) }
+                        } label: {
+                            Label(status.displayName, systemImage: statusIcon(status))
+                        }
+                    }
+                }
+        }
+    }
+
+    private func statusIcon(_ status: BeanStatus) -> String {
+        switch status {
+        case .active:   return "checkmark.circle"
+        case .frozen:   return "snowflake"
+        case .pantry:   return "archivebox"
+        case .depleted: return "battery.0"
+        }
+    }
+}
+
+// MARK: - Bean Status Badge
+
+struct BeanStatusBadge: View {
+    let status: BeanStatus
+
+    var body: some View {
+        Text("\(status.emoji) \(status.displayName)")
+            .font(.caption.weight(.medium))
+            .foregroundStyle(foregroundColor)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(backgroundColor)
+            .clipShape(Capsule())
+    }
+
+    private var foregroundColor: Color {
+        switch status {
+        case .active:   return .green
+        case .frozen:   return .cyan
+        case .pantry:   return .orange
+        case .depleted: return .secondary
+        }
+    }
+
+    private var backgroundColor: Color {
+        foregroundColor.opacity(0.12)
     }
 }
 

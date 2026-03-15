@@ -121,14 +121,17 @@ struct CafePage: View {
                     }
                 }
                 Spacer()
-                if let level = bean.roastLevel {
-                    Text(level.uppercased())
-                        .font(Theme.Font.caption.weight(.medium))
-                        .foregroundStyle(Color.gbAccent)
-                        .padding(.horizontal, Theme.Spacing.sm)
-                        .padding(.vertical, Theme.Spacing.xs)
-                        .background(Color.gbAccent.opacity(0.12))
-                        .clipShape(Capsule())
+                VStack(alignment: .trailing, spacing: Theme.Spacing.xs) {
+                    if let level = bean.roastLevel {
+                        Text(level.uppercased())
+                            .font(Theme.Font.caption.weight(.medium))
+                            .foregroundStyle(Color.gbAccent)
+                            .padding(.horizontal, Theme.Spacing.sm)
+                            .padding(.vertical, Theme.Spacing.xs)
+                            .background(Color.gbAccent.opacity(0.12))
+                            .clipShape(Capsule())
+                    }
+                    BeanStatusBadge(status: bean.status)
                 }
             }
         }
