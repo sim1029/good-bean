@@ -11,6 +11,8 @@ struct CafePage: View {
     @State private var shotBeans: [UUID: BeanEmbed] = [:]
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var showAddBean = false
+    @State private var showAddMachine = false
 
     var body: some View {
         NavigationStack {
@@ -22,9 +24,7 @@ struct CafePage: View {
                     ScrollView {
                         VStack(spacing: Theme.Spacing.lg) {
                             heroCTACard
-                            if let bean = activeBean {
-                                activeBeanCard(bean)
-                            }
+                            cafeSetupCard
                             if !shots.isEmpty {
                                 recentShotsSection
                             }
@@ -39,6 +39,16 @@ struct CafePage: View {
             .navigationBarTitleDisplayMode(.large)
         }
         .task { await load() }
+        .sheet(isPresented: $showAddBean) {
+            if let id = authManager.currentUserId {
+                AddItemView(itemType: .bean, profileId: id) { await load() }
+            }
+        }
+        .sheet(isPresented: $showAddMachine) {
+            if let id = authManager.currentUserId {
+                AddItemView(itemType: .machine, profileId: id) { await load() }
+            }
+        }
     }
 
     private func load() async {
@@ -97,51 +107,73 @@ struct CafePage: View {
         .gbCardStyle()
     }
 
-    // MARK: - Active Bean Card
+    // MARK: - Cafe Setup Card
 
-    private func activeBeanCard(_ bean: Bean) -> some View {
+    private var cafeSetupCard: some View {
         VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
-            Text("ACTIVE BEAN")
+            Text("CAFE SETUP")
                 .font(Theme.Font.caption)
                 .foregroundStyle(Color.gbTextTertiary)
                 .kerning(1)
+                .padding(.horizontal, Theme.Spacing.md)
+                .padding(.top, Theme.Spacing.md)
 
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
-                    Text(bean.name)
-                        .font(Theme.Font.headline)
-                        .foregroundStyle(Color.gbTextPrimary)
-                    Text("\(bean.roaster)")
-                        .font(Theme.Font.body)
-                        .foregroundStyle(Color.gbTextSecondary)
-                    if let roastDate = bean.roastDate {
-                        Text(daysAgoText(from: roastDate))
-                            .font(Theme.Font.caption)
-                            .foregroundStyle(Color.gbTextTertiary)
-                    }
+            VStack(spacing: 0) {
+                Button {
+                    showAddMachine = true
+                } label: {
+                    setupRow(
+                        icon: "cup.and.saucer",
+                        label: "MACHINE",
+                        value: activeMachine?.displayName ?? "Add a machine",
+                        isEmpty: activeMachine == nil
+                    )
                 }
-                Spacer()
-                if let level = bean.roastLevel {
-                    Text(level.uppercased())
-                        .font(Theme.Font.caption.weight(.medium))
-                        .foregroundStyle(Color.gbAccent)
-                        .padding(.horizontal, Theme.Spacing.sm)
-                        .padding(.vertical, Theme.Spacing.xs)
-                        .background(Color.gbAccent.opacity(0.12))
-                        .clipShape(Capsule())
+                .buttonStyle(.plain)
+
+                Divider()
+                    .background(Color.gbSeparator)
+                    .padding(.leading, Theme.Spacing.md + 28)
+
+                Button {
+                    showAddBean = true
+                } label: {
+                    setupRow(
+                        icon: "leaf",
+                        label: "ACTIVE BEAN",
+                        value: activeBean.map { "\($0.name) · \($0.roaster)" } ?? "Add a bean",
+                        isEmpty: activeBean == nil
+                    )
                 }
+                .buttonStyle(.plain)
             }
+
+            Spacer().frame(height: Theme.Spacing.xs)
         }
-        .padding(Theme.Spacing.lg)
         .gbCardStyle()
     }
 
-    private func daysAgoText(from dateString: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        guard let date = formatter.date(from: dateString) else { return "" }
-        let days = Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0
-        return "Roasted \(days) day\(days == 1 ? "" : "s") ago"
+    private func setupRow(icon: String, label: String, value: String, isEmpty: Bool) -> some View {
+        HStack(spacing: Theme.Spacing.md) {
+            Image(systemName: icon)
+                .font(.system(size: 16))
+                .foregroundStyle(Color.gbAccent)
+                .frame(width: 20)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(label)
+                    .font(Theme.Font.caption)
+                    .foregroundStyle(Color.gbTextTertiary)
+                    .kerning(1)
+                Text(value)
+                    .font(Theme.Font.body.weight(.medium))
+                    .foregroundStyle(isEmpty ? Color.gbAccent : Color.gbTextPrimary)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(Color.gbTextTertiary)
+        }
+        .padding(Theme.Spacing.md)
     }
 
     // MARK: - Recent Shots Section

@@ -7,8 +7,8 @@
 
 # --- Xcode System Files ---
 # User-specific settings (window positions, last opened files)
-*.xcuserdata/
-*.xcworkspace/xcuserdata/
+xcuserdata/
+*.xcuserstate
 
 # Build artifacts (Generated files, extremely large)
 DerivedData/

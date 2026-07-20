@@ -11,6 +11,7 @@ struct CommentEmbed: Codable, Sendable {
     let id: UUID
 }
 
+// Used by CafePage to display bean name/roaster in recent-shots list
 struct BeanEmbed: Codable, Sendable {
     let name: String
     let roaster: String
@@ -31,8 +32,41 @@ struct ProfileEmbed: Codable, Sendable {
     }
 }
 
+// MARK: - Minimal catalog embeds (for feed joins)
+
+struct BeanCatalogNameEmbed: Codable, Sendable {
+    let name: String
+    let roaster: String
+    let roastLevel: String?
+
+    enum CodingKeys: String, CodingKey {
+        case name, roaster
+        case roastLevel = "roast_level"
+    }
+}
+
+struct MachineCatalogNameEmbed: Codable, Sendable {
+    let brand: String
+    let model: String
+}
+
+// Nested embed for shot_pulls → beans → beans_catalog
+// Query: beans(id,beans_catalog(name,roaster))
+struct ShotBeanEmbed: Codable, Sendable {
+    let id: UUID
+    let beansCatalog: BeanCatalogNameEmbed?
+
+    var name: String    { beansCatalog?.name    ?? "Unknown Bean"    }
+    var roaster: String { beansCatalog?.roaster ?? ""                }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case beansCatalog = "beans_catalog"
+    }
+}
+
 // MARK: - Feed Shot Pull
-// PostgREST select: "*,shot_likes(user_id),shot_comments(id),beans(name,roaster),profiles(username,avatar_url)"
+// Query: "*,shot_likes(user_id),shot_comments(id),beans(id,beans_catalog(name,roaster)),profiles(username,avatar_url)"
 
 struct FeedShotPull: Codable, Identifiable, Sendable {
     let id: UUID
@@ -46,28 +80,28 @@ struct FeedShotPull: Codable, Identifiable, Sendable {
     let createdAt: String?
     let shotLikes: [LikeEmbed]
     let shotComments: [CommentEmbed]
-    let bean: BeanEmbed?
+    let bean: ShotBeanEmbed?
     let profile: ProfileEmbed?
 
     enum CodingKeys: String, CodingKey {
         case id
-        case userId = "user_id"
-        case doseGrams = "dose_grams"
-        case yieldGrams = "yield_grams"
-        case timeSeconds = "time_seconds"
-        case tempC = "temp_c"
+        case userId       = "user_id"
+        case doseGrams    = "dose_grams"
+        case yieldGrams   = "yield_grams"
+        case timeSeconds  = "time_seconds"
+        case tempC        = "temp_c"
         case rating
-        case isPublic = "is_public"
-        case createdAt = "created_at"
-        case shotLikes = "shot_likes"
+        case isPublic     = "is_public"
+        case createdAt    = "created_at"
+        case shotLikes    = "shot_likes"
         case shotComments = "shot_comments"
-        case bean = "beans"
-        case profile = "profiles"
+        case bean         = "beans"
+        case profile      = "profiles"
     }
 
-    var likeCount: Int { shotLikes.count }
+    var likeCount: Int    { shotLikes.count    }
     var commentCount: Int { shotComments.count }
-    var ratio: Double { yieldGrams / doseGrams }
+    var ratio: Double     { yieldGrams / doseGrams }
 
     func hasLiked(userId: UUID?) -> Bool {
         guard let userId else { return false }
@@ -76,38 +110,40 @@ struct FeedShotPull: Codable, Identifiable, Sendable {
 }
 
 // MARK: - Feed Bean
-// PostgREST select: "*,bean_likes(user_id),bean_comments(id),profiles(username,avatar_url)"
+// Query: "*,beans_catalog(name,roaster,roast_level),bean_likes(user_id),bean_comments(id),profiles!created_by(username,avatar_url)"
 
 struct FeedBean: Codable, Identifiable, Sendable {
     let id: UUID
     let createdBy: UUID?
-    let roaster: String
-    let name: String
-    let roastLevel: String?
+    let catalog: BeanCatalogNameEmbed?
     let roastDate: String?
     let notes: String?
+    let status: String
     let isPublic: Bool
     let createdAt: String?
     let beanLikes: [LikeEmbed]
     let beanComments: [CommentEmbed]
     let profile: ProfileEmbed?
 
+    // Delegated to catalog embed
+    var name: String        { catalog?.name      ?? "Unknown Bean"    }
+    var roaster: String     { catalog?.roaster   ?? ""                }
+    var roastLevel: String? { catalog?.roastLevel                      }
+
     enum CodingKeys: String, CodingKey {
         case id
-        case createdBy = "created_by"
-        case roaster
-        case name
-        case roastLevel = "roast_level"
-        case roastDate = "roast_date"
-        case notes
-        case isPublic = "is_public"
-        case createdAt = "created_at"
-        case beanLikes = "bean_likes"
+        case createdBy    = "created_by"
+        case catalog      = "beans_catalog"
+        case roastDate    = "roast_date"
+        case notes, status
+        case isPublic     = "is_public"
+        case createdAt    = "created_at"
+        case beanLikes    = "bean_likes"
         case beanComments = "bean_comments"
-        case profile = "profiles"
+        case profile      = "profiles"
     }
 
-    var likeCount: Int { beanLikes.count }
+    var likeCount: Int    { beanLikes.count    }
     var commentCount: Int { beanComments.count }
 
     func hasLiked(userId: UUID?) -> Bool {
@@ -117,13 +153,12 @@ struct FeedBean: Codable, Identifiable, Sendable {
 }
 
 // MARK: - Feed Machine
-// PostgREST select: "*,machine_likes(user_id),machine_comments(id),profiles(username,avatar_url)"
+// Query: "*,machines_catalog(brand,model),machine_likes(user_id),machine_comments(id),profiles!created_by(username,avatar_url)"
 
 struct FeedMachine: Codable, Identifiable, Sendable {
     let id: UUID
     let createdBy: UUID?
-    let brand: String
-    let model: String
+    let catalog: MachineCatalogNameEmbed?
     let notes: String?
     let isPublic: Bool
     let createdAt: String?
@@ -131,22 +166,24 @@ struct FeedMachine: Codable, Identifiable, Sendable {
     let machineComments: [CommentEmbed]
     let profile: ProfileEmbed?
 
+    var brand: String       { catalog?.brand ?? "Unknown" }
+    var model: String       { catalog?.model ?? "Machine" }
+    var displayName: String { "\(brand) \(model)"          }
+
     enum CodingKeys: String, CodingKey {
         case id
-        case createdBy = "created_by"
-        case brand
-        case model
+        case createdBy       = "created_by"
+        case catalog         = "machines_catalog"
         case notes
-        case isPublic = "is_public"
-        case createdAt = "created_at"
-        case machineLikes = "machine_likes"
+        case isPublic        = "is_public"
+        case createdAt       = "created_at"
+        case machineLikes    = "machine_likes"
         case machineComments = "machine_comments"
-        case profile = "profiles"
+        case profile         = "profiles"
     }
 
-    var likeCount: Int { machineLikes.count }
+    var likeCount: Int    { machineLikes.count    }
     var commentCount: Int { machineComments.count }
-    var displayName: String { "\(brand) \(model)" }
 
     func hasLiked(userId: UUID?) -> Bool {
         guard let userId else { return false }
@@ -163,16 +200,16 @@ enum FeedItem: Identifiable, Sendable {
 
     var id: UUID {
         switch self {
-        case .shot(let s): return s.id
-        case .bean(let b): return b.id
+        case .shot(let s):    return s.id
+        case .bean(let b):    return b.id
         case .machine(let m): return m.id
         }
     }
 
     var createdAt: String? {
         switch self {
-        case .shot(let s): return s.createdAt
-        case .bean(let b): return b.createdAt
+        case .shot(let s):    return s.createdAt
+        case .bean(let b):    return b.createdAt
         case .machine(let m): return m.createdAt
         }
     }
