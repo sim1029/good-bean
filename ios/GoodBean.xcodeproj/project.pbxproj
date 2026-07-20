@@ -13,46 +13,56 @@
 		BD00000007 /* SupabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000008 /* SupabaseClient.swift */; };
 		BD00000009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD0000000A /* Assets.xcassets */; };
 		BD0000000B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD0000000C /* Preview Assets.xcassets */; };
+		BD00000022 /* CafePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000023 /* CafePage.swift */; };
+		BD00000024 /* FeedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000025 /* FeedPage.swift */; };
+		BD00000026 /* VisualizePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000027 /* VisualizePage.swift */; };
+		BD00000028 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000029 /* ProfilePage.swift */; };
 		BD00000032 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = BD00000031 /* Supabase */; };
 		BD00000041 /* Bean.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000040 /* Bean.swift */; };
 		BD00000051 /* BeansListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000050 /* BeansListView.swift */; };
 		BD00000060 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000061 /* LoginView.swift */; };
 		BD00000062 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000063 /* AuthenticationManager.swift */; };
 		BD00000064 /* DevSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000065 /* DevSettings.swift */; };
-		BD00000022 /* CafePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000023 /* CafePage.swift */; };
-		BD00000024 /* FeedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000025 /* FeedPage.swift */; };
-		BD00000026 /* VisualizePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000027 /* VisualizePage.swift */; };
-		BD00000028 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000029 /* ProfilePage.swift */; };
 		BD00000070 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000071 /* AppTheme.swift */; };
 		BD00000080 /* EmailAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000081 /* EmailAuthView.swift */; };
 		BD00000090 /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000091 /* Machine.swift */; };
 		BD00000092 /* ShotPull.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000093 /* ShotPull.swift */; };
 		BD00000094 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00000095 /* FeedItem.swift */; };
+		BD000000A1 /* CatalogRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000000A0 /* CatalogRequest.swift */; };
+		BD000000A3 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000000A2 /* AddItemView.swift */; };
+		BD000000A5 /* RequestItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000000A4 /* RequestItemView.swift */; };
+		BD000000B1 /* BeanCatalogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000000B0 /* BeanCatalogEntry.swift */; };
+		BD000000B3 /* MachineCatalogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000000B2 /* MachineCatalogEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BD0000000D /* GoodBean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoodBean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD00000002 /* GoodBeanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodBeanApp.swift; sourceTree = "<group>"; };
 		BD00000004 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BD00000006 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		BD00000008 /* SupabaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClient.swift; sourceTree = "<group>"; };
 		BD0000000A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD0000000C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BD0000000D /* GoodBean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoodBean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD0000000E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BD00000023 /* CafePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafePage.swift; sourceTree = "<group>"; };
+		BD00000025 /* FeedPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPage.swift; sourceTree = "<group>"; };
+		BD00000027 /* VisualizePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizePage.swift; sourceTree = "<group>"; };
+		BD00000029 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		BD00000040 /* Bean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bean.swift; sourceTree = "<group>"; };
 		BD00000050 /* BeansListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeansListView.swift; sourceTree = "<group>"; };
 		BD00000061 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		BD00000063 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		BD00000065 /* DevSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevSettings.swift; sourceTree = "<group>"; };
-		BD00000023 /* CafePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafePage.swift; sourceTree = "<group>"; };
-		BD00000025 /* FeedPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPage.swift; sourceTree = "<group>"; };
-		BD00000027 /* VisualizePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizePage.swift; sourceTree = "<group>"; };
-		BD00000029 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		BD00000071 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		BD00000081 /* EmailAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthView.swift; sourceTree = "<group>"; };
 		BD00000091 /* Machine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
 		BD00000093 /* ShotPull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotPull.swift; sourceTree = "<group>"; };
 		BD00000095 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
+		BD000000A0 /* CatalogRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRequest.swift; sourceTree = "<group>"; };
+		BD000000A2 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
+		BD000000A4 /* RequestItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestItemView.swift; sourceTree = "<group>"; };
+		BD000000B0 /* BeanCatalogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeanCatalogEntry.swift; sourceTree = "<group>"; };
+		BD000000B2 /* MachineCatalogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineCatalogEntry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +103,8 @@
 				BD00000027 /* VisualizePage.swift */,
 				BD00000029 /* ProfilePage.swift */,
 				BD00000081 /* EmailAuthView.swift */,
+				BD000000A2 /* AddItemView.swift */,
+				BD000000A4 /* RequestItemView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -105,6 +117,9 @@
 				BD00000091 /* Machine.swift */,
 				BD00000093 /* ShotPull.swift */,
 				BD00000095 /* FeedItem.swift */,
+				BD000000A0 /* CatalogRequest.swift */,
+				BD000000B0 /* BeanCatalogEntry.swift */,
+				BD000000B2 /* MachineCatalogEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -142,7 +157,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BD00000017 /* Root */ = {
+		BD00000017 = {
 			isa = PBXGroup;
 			children = (
 				BD00000010 /* GoodBean */,
@@ -184,7 +199,7 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					BD00000018 /* GoodBean */ = {
+					BD00000018 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
@@ -196,7 +211,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = BD00000017 /* Root */;
+			mainGroup = BD00000017;
 			packageReferences = (
 				BD00000030 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
@@ -244,6 +259,11 @@
 				BD00000090 /* Machine.swift in Sources */,
 				BD00000092 /* ShotPull.swift in Sources */,
 				BD00000094 /* FeedItem.swift in Sources */,
+				BD000000A1 /* CatalogRequest.swift in Sources */,
+				BD000000A3 /* AddItemView.swift in Sources */,
+				BD000000A5 /* RequestItemView.swift in Sources */,
+				BD000000B1 /* BeanCatalogEntry.swift in Sources */,
+				BD000000B3 /* MachineCatalogEntry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,8 +299,8 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -343,8 +363,8 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -379,7 +399,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8XCYMHWU8P;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = GoodBean/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -404,7 +424,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8XCYMHWU8P;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = GoodBean/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -425,20 +445,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BD0000001D /* Build configuration list for PBXProject "GoodBean" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BD0000001E /* Debug */,
-				BD0000001F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		BD00000019 /* Build configuration list for PBXNativeTarget "GoodBean" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BD00000020 /* Debug */,
 				BD00000021 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD0000001D /* Build configuration list for PBXProject "GoodBean" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD0000001E /* Debug */,
+				BD0000001F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

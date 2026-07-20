@@ -11,15 +11,24 @@ BEGIN
   IF NOT EXISTS (
     SELECT 1 FROM auth.users WHERE id = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
   ) THEN
+    -- NOTE: every varchar token column must be '' (not NULL). Newer GoTrue
+    -- scans these into non-nullable Go strings; a NULL causes login to fail
+    -- with "Database error querying schema".
     INSERT INTO auth.users (
       id, instance_id, aud, role, email, encrypted_password,
-      email_confirmed_at, created_at, updated_at, confirmation_token, recovery_token
+      email_confirmed_at, created_at, updated_at,
+      confirmation_token, recovery_token,
+      email_change, email_change_token_new, email_change_token_current,
+      phone_change, phone_change_token, reauthentication_token
     ) VALUES (
       'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
       '00000000-0000-0000-0000-000000000000',
       'authenticated', 'authenticated', 'testuser@goodbean.dev',
       crypt('testpassword123', gen_salt('bf')),
-      NOW(), NOW(), NOW(), '', ''
+      NOW(), NOW(), NOW(),
+      '', '',
+      '', '', '',
+      '', '', ''
     );
   END IF;
 END $$;
