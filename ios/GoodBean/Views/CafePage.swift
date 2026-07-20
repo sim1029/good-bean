@@ -142,7 +142,8 @@ struct CafePage: View {
                         icon: "leaf",
                         label: "ACTIVE BEAN",
                         value: activeBean.map { "\($0.name) · \($0.roaster)" } ?? "Add a bean",
-                        isEmpty: activeBean == nil
+                        isEmpty: activeBean == nil,
+                        status: activeBean?.status
                     )
                 }
                 .buttonStyle(.plain)
@@ -153,7 +154,7 @@ struct CafePage: View {
         .gbCardStyle()
     }
 
-    private func setupRow(icon: String, label: String, value: String, isEmpty: Bool) -> some View {
+    private func setupRow(icon: String, label: String, value: String, isEmpty: Bool, status: BeanStatus? = nil) -> some View {
         HStack(spacing: Theme.Spacing.md) {
             Image(systemName: icon)
                 .font(.system(size: 16))
@@ -169,6 +170,9 @@ struct CafePage: View {
                     .foregroundStyle(isEmpty ? Color.gbAccent : Color.gbTextPrimary)
             }
             Spacer()
+            if let status {
+                BeanStatusBadge(status: status)
+            }
             Image(systemName: "chevron.right")
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(Color.gbTextTertiary)

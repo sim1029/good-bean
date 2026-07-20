@@ -155,10 +155,21 @@ Seed data: 5 public sample beans, 1 test user with profile + 2 private beans + 3
 1. **Check migrations** — read `supabase/migrations/` to understand current schema state
 2. **Plan** — propose a plan covering both SQL migration and Swift implementation
 3. **Implement** — write code (migration + Swift models/views/services together)
-4. **Build & test** — use XcodeBuildMCP or xcodebuild to verify
+4. **Build & verify** — confirm it compiles (xcodebuild / XcodeBuildMCP). For anything UI/UX, hand off to the owner per **UI/UX Verification** below rather than judging the result yourself.
 5. **Commit** — atomic commits grouping related changes
 6. **Push** — push your feature branch
 7. **Create PR** — use `gh pr create`
+
+---
+
+## UI/UX Verification
+
+**The repo owner owns UI/UX judgment — the agent does not.** The owner has the taste and verifies visuals/interaction on their own iPhone; the agent is explicitly not trusted to assess how something looks or feels.
+
+So when a change affects UI or UX:
+- **Do not** claim a UI/UX outcome is good, correct, or done based on your own inspection or screenshots.
+- **Do** give the owner clear, in-depth **testing instructions**: exactly which screen(s) to open, what actions to take (taps, swipes, long-presses, menu selections), what the expected result is, and the specific things to look for (spacing, color/theme in both light and dark mode, alignment, states like empty/loading/error, edge cases). Be concrete enough that they can follow it without guessing.
+- You may still verify the non-visual parts yourself (compiles, data decodes, network/DB writes succeed, logic is correct) and report those plainly.
 
 ---
 

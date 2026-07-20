@@ -46,6 +46,19 @@ final class SupabaseService: Sendable {
             .execute().value
     }
 
+    /// Updates the lifecycle status and remaining inventory of a user's bean.
+    /// RLS ("Users can update own beans") gates this to the owner.
+    func updateBeanStatus(id: UUID, status: BeanStatus, remainingGrams: Double?) async throws {
+        struct BeanStatusUpdate: Encodable, Sendable {
+            let status: String
+            let remaining_grams: Double?
+        }
+        try await client.from("beans")
+            .update(BeanStatusUpdate(status: status.rawValue, remaining_grams: remainingGrams))
+            .eq("id", value: id)
+            .execute()
+    }
+
     // MARK: - Profiles
 
     func getProfiles() async throws -> [Profile] {
@@ -100,7 +113,7 @@ final class SupabaseService: Sendable {
         }
         struct Inserted: Decodable, Sendable { let id: UUID }
         let rows: [Inserted] = try await client.from("beans")
-            .insert(NewBean(created_by: userId, catalog_id: catalogId, status: "active", is_public: false))
+            .insert(NewBean(created_by: userId, catalog_id: catalogId, status: BeanStatus.active.rawValue, is_public: false))
             .select("id")
             .execute().value
         guard let row = rows.first else { throw SupabaseError.insertFailed }

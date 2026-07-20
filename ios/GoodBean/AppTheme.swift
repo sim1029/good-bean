@@ -10,6 +10,11 @@ extension Color {
     static let gbAccent        = Color.dynamic(light: 0xB8712A, dark: 0xD4924D)
     static let gbSeparator     = Color.dynamic(light: 0xE8E0D8, dark: 0x2A251F)
 
+    // Cool tones reserved for frozen/defrosted bean statuses (the only
+    // non-warm colors in the system — kept muted to fit the palette).
+    static let gbStatusFrozen    = Color.dynamic(light: 0x3A7CA5, dark: 0x74B3D8)
+    static let gbStatusDefrosted = Color.dynamic(light: 0x4C9A94, dark: 0x7FC9C0)
+
     private static func dynamic(light: UInt, dark: UInt) -> Color {
         Color(UIColor { $0.userInterfaceStyle == .dark
             ? UIColor(hex: dark) : UIColor(hex: light) })
@@ -24,6 +29,20 @@ private extension UIColor {
             blue:  CGFloat( hex        & 0xFF) / 255,
             alpha: alpha
         )
+    }
+}
+
+// MARK: - Bean Status Color
+extension BeanStatus {
+    /// Themed color for this status (used by badges and menus).
+    var color: Color {
+        switch self {
+        case .active:    return .gbAccent
+        case .frozen:    return .gbStatusFrozen
+        case .defrosted: return .gbStatusDefrosted
+        case .archived:  return .gbTextSecondary
+        case .depleted:  return .gbTextTertiary
+        }
     }
 }
 
